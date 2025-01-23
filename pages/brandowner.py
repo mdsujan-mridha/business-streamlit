@@ -1,6 +1,7 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
+import numpy as np
 
 st.set_page_config(page_title="Brand Owner", page_icon=":shark:", layout="wide")
 st.sidebar.header("🔰Dashboard")
@@ -78,10 +79,91 @@ elif page=="Sales Analysis":
     with col1:
        st.button('Back')
     with col3:
-        st.button('Next')        
+        st.button('Next')     
+        # revenue page =======================================================   
 elif page=="Revenue Comparison":
-    st.write("Revenue Comparison")
+    # Set page configst.set_page_config(page_title="Revenue Comparison", layout="wide")
+
+# Generate mock data
+        np.random.seed(42)
+        months = pd.date_range(start='2023-01-01', end='2023-12-31', freq='M')
+        current_year = 70 + np.random.rand(12) * 3
+        previous_year = 40 + np.random.rand(12) * 30
+
+        data = pd.DataFrame({
+                'Month': months,
+                'Current Year': current_year,
+                'Previous Year': previous_year})
+
+       # Title
+        st.title('📈 Revenue Comparison')
+
+# Date range selector
+        date_range = st.selectbox(
+             'Select Date Range:',
+                ['Year-over-Year', 'Quarter-over-Quarter', 'Month-over-Month'])
+
+# Main chart
+        st.subheader('Comparative Analysis')
+        chart_data = pd.DataFrame({'Month': months,'Current Year': current_year,'Previous Year': previous_year})
+
+        st.line_chart(
+        chart_data.set_index('Month')[['Current Year', 'Previous Year']],height=400)
+
+# Metrics
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric(
+            label="Revenue Growth",
+            value="12%",
+            delta="2.5%")
+
+        with col2:
+            st.metric(label="Revenue Decline",value="5%",delta="-1.2%")
+
+        with col3:
+            st.metric(label="Net Profit Margin",value="8%",delta="0.8%"
+    )
+
+# Navigation buttons
+        col1, col2 = st.columns([1, 1])
+
+        with col1:
+           if st.button('⬅️ Back'):
+            pass  # Add navigation logic here
+        with col2:
+         if st.button('Next ➡️'):
+          pass  # Add navigation logic here
 elif page=="Inventory Managment":
+    # inventory page ====================================
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+            st.write('Wireless Headphones')
+            st.write('Category: Electronics')
+            st.write('StockLevel: 100')
+
+    with col2:
+            st.write('T-shirt')
+            st.write('Category: Apparel')
+            st.write('StockLevel: 100')
+
+    with col3:
+            st.write('Ceramic')
+            st.write('Category: home Goods')
+            st.write('StockLevel: 100')
+    
+
+# Navigation buttons
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+           if st.button('⬅️ Back'):
+            pass  # Add navigation logic here
+    with col2:
+         if st.button('Next ➡️'):
+          pass  # Add navigation logic here
     st.write("Inventory Managment")
 elif page=="Predict Data":
     st.write("Predict Data")
